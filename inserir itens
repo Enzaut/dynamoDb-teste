@@ -1,0 +1,10 @@
+Inserindo um item
+
+aws dynamodb put-item \
+    --table-name Music \
+    --item file://itemmusic.json \
+
+Inserindo diversos itens
+
+aws dynamodb batch-write-item \
+    --request-items file://batchmusic.json
