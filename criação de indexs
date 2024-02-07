@@ -1,0 +1,20 @@
+INDEX BASEADO NO TITULO 
+
+aws dynamodb update-table \
+    --table-name Music \
+    --attribute-definitions AttributeName=AlbumTitle,AttributeType=S \
+    --global-secondary-index-updates \
+        "[{\"Create\":{\"IndexName\": \"AlbumTitle-index\",\"KeySchema\":[{\"AttributeName\":\"AlbumTitle\",\"KeyType\":\"HASH\"}], \
+        \"ProvisionedThroughput\": {\"ReadCapacityUnits\": 10, \"WriteCapacityUnits\": 5      },\"Projection\":{\"ProjectionType\":\"ALL\"}}}]"
+
+
+INDEX BASEADO NO NOME DO ARTISTA E ALBUM
+
+aws dynamodb update-table \
+    --table-name Music \
+    --attribute-definitions\
+        AttributeName=Artist,AttributeType=S \
+        AttributeName=AlbumTitle,AttributeType=S \
+    --global-secondary-index-updates \
+        "[{\"Create\":{\"IndexName\": \"ArtistAlbumTitle-index\",\"KeySchema\":[{\"AttributeName\":\"Artist\",\"KeyType\":\"HASH\"}, {\"AttributeName\":\"AlbumTitle\",\"KeyType\":\"RANGE\"}], \
+        \"ProvisionedThroughput\": {\"ReadCapacityUnits\": 10, \"WriteCapacityUnits\": 5      },\"Projection\":{\"ProjectionType\":\"ALL\"}}}]"
